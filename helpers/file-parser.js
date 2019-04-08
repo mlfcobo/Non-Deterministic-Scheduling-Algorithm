@@ -5,7 +5,7 @@ const readFile = (filename, del) => {
   var filepath = `files/${filename}`;
   var contents = fs.readFileSync(filepath, { encoding: "utf8" });
   if (del) {
-    fs.unlink(filepath, function(err) {
+    fs.unlink(filepath, function (err) {
       if (err) throw err;
       console.log("Successfully deleted " + filepath);
     });

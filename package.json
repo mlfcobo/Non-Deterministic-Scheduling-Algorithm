@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha || true"
+    "test": "nyc mocha --timeout=3000"
   },
   "author": "",
   "license": "ISC",
@@ -14,10 +14,14 @@
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
+    "heroku": "^7.22.9",
     "multer": "^1.4.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^5.2.0"
+    "cypress": "^3.2.0",
+    "cypress-form-data-with-file-upload": "^1.0.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.3.0"
   }
 }

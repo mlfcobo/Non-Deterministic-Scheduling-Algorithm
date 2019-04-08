@@ -1,0 +1,269 @@
+< !DOCTYPE html>
+    <html>
+
+    <head>
+        <title>CMSC 125 Lab 2</title>
+        <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/vue.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            <div class="top">
+                <div class="container">
+                    CMSC 125 &#9679;
+                </div>
+            </div>
+            <nav class="navbar navbar-inverse">
+                <div class="container">
+                    <div class="navbar-header">
+                        <p>Non-Deterministic Scheduling Algorithms</p>
+                        <form method="POST" action="/" enctype="multipart/form-data">
+                            <div class="row">
+                                <input type="file" class=" col-md-7 form-control-file" name="input" />
+                                <button type="submit" class=" col-md-4 btn btn-default">
+                                    Process
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="table-box">
+                            <table class="table table-striped shadow body-scroll">
+                                <thead>
+                                    <tr>
+                                        <th>Process</th>
+                                        <th>Arrival</th>
+                                        <th>Burst Time</th>
+                                        <th>Priority</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="p in data">
+                                        <td>{{ p.name }}</td>
+                                        <td>{{ p.arrivalTime }}</td>
+                                        <td>{{ p.burstTime }} ms</td>
+                                        <td>{{ p.priority }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-7 tab shadow">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab1">FCFS</a></li>
+                            <li><a data-toggle="tab" href="#tab2">SJF</a></li>
+                            <li><a data-toggle="tab" href="#tab5">FCFS Priority</a></li>
+                            <li><a data-toggle="tab" href="#tab6">SJF Priority</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab1" class="tab-pane fade in active">
+                                <p class="title">FCFS | Gantt Chart</p>
+                                <div class="btn-group gantt-chart">
+                                    <button class="btn btn-primary" v-for="p in fcfs.data" data-toggle="tooltip"
+                                        data-placement="top" : title="`Waiting Time: ${p.wTime} | Turnaround Time: ${p.tTime}`">
+                                        P{{ p.name }} ({{ p.wTime }},{{ p.tTime }})
+                                    </button>
+                                </div>
+                                <p class="title">Computation</p>
+                                <div class="container span computation">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <ul class="list-group">
+                                                <li class="list-group-item header">
+                                                    Waiting Time (ms)
+                                                </li>
+                                                <li v-for="p in fcfs.data" class="list-group-item">
+                                                    P{{ p.name }} = {{ p.wTime }}
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Sum = {{ fcfs.accumWaitingTime }} ms
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Average = {{ fcfs.aveWaitingTime }} ms
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <ul class="list-group">
+                                                <li class="list-group-item header">
+                                                    Turnaround Time (ms)
+                                                </li>
+                                                <li v-for="p in fcfs.data" class="list-group-item">
+                                                    P{{ p.name }} = {{ p.tTime }}
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Sum = {{ fcfs.accumTurnaroundTime }} ms
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Average = {{ fcfs.aveTurnaroundTime }} ms
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab2" class="tab-pane fade">
+                                <p class="title">SJF | Gantt Chart</p>
+                                <div class="btn-group gantt-chart">
+                                    <button class="btn btn-primary" v-for="p in sjf.data" data-toggle="tooltip"
+                                        data-placement="top" : title="`Waiting Time: ${p.wTime} | Turnaround Time: ${p.tTime}`">
+                                        P{{ p.name }} ({{ p.wTime }},{{ p.tTime }})
+                                    </button>
+                                </div>
+                                <p class="title">Computation</p>
+                                <div class="container span computation">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <ul class="list-group">
+                                                <li class="list-group-item header">
+                                                    Waiting Time (ms)
+                                                </li>
+                                                <li v-for="p in sjf.sortedData" class="list-group-item">
+                                                    P{{ p.name }} = {{ p.wTime }}
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Sum = {{ sjf.accumWaitingTime }} ms
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Average = {{ sjf.aveWaitingTime }} ms
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <ul class="list-group">
+                                                <li class="list-group-item header">
+                                                    Turnaround Time (ms)
+                                                </li>
+                                                <li v-for="p in sjf.sortedData" class="list-group-item">
+                                                    P{{ p.name }} = {{ p.tTime }}
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Sum = {{ sjf.accumTurnaroundTime }} ms
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Average = {{ sjf.aveTurnaroundTime }} ms
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab5" class="tab-pane fade">
+                                <p class="title">FCFS Priority | Gantt Chart</p>
+                                <div class="btn-group gantt-chart">
+                                    <button class="btn btn-primary" v-for="p in priority.fcfs.data" data-toggle="tooltip"
+                                        data-placement="top" : title="`Waiting Time: ${p.wTime} | Turnaround Time: ${p.tTime}`">
+                                        P{{ p.name }} ({{ p.wTime }},{{ p.tTime }})
+                                    </button>
+                                </div>
+                                <p class="title">Computation</p>
+                                <div class="container span computation">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <ul class="list-group">
+                                                <li class="list-group-item header">
+                                                    Waiting Time (ms)
+                                                </li>
+                                                <li v-for="p in priority.fcfs.sortedData" class="list-group-item">
+                                                    P{{ p.name }} = {{ p.wTime }}
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Sum = {{ priority.fcfs.accumWaitingTime }} ms
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Average = {{ priority.fcfs.aveWaitingTime }} ms
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <ul class="list-group">
+                                                <li class="list-group-item header">
+                                                    Turnaround Time (ms)
+                                                </li>
+                                                <li v-for="p in priority.fcfs.sortedData" class="list-group-item">
+                                                    P{{ p.name }} = {{ p.tTime }}
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Sum = {{ priority.fcfs.accumTurnaroundTime }} ms
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Average = {{ priority.fcfs.aveTurnaroundTime }} ms
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab6" class="tab-pane fade">
+                                <p class="title">SJF Priority | Gantt Chart</p>
+                                <div class="btn-group gantt-chart">
+                                    <button class="btn btn-primary" v-for="p in priority.sjf.data" data-toggle="tooltip"
+                                        data-placement="top" : title="`Waiting Time: ${p.wTime} | Turnaround Time: ${p.tTime}`">
+                                        P{{ p.name }} ({{ p.wTime }},{{ p.tTime }})
+                                    </button>
+                                </div>
+                                <p class="title">Computation</p>
+                                <div class="container span computation">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <ul class="list-group">
+                                                <li class="list-group-item header">
+                                                    Waiting Time (ms)
+                                                </li>
+                                                <li v-for="p in priority.sjf.sortedData" class="list-group-item">
+                                                    P{{ p.name }} = {{ p.wTime }}
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Sum = {{ priority.sjf.accumWaitingTime }} ms
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Average = {{ priority.sjf.aveWaitingTime }} ms
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <ul class="list-group">
+                                                <li class="list-group-item header">
+                                                    Turnaround Time (ms)
+                                                </li>
+                                                <li v-for="p in priority.sjf.sortedData" class="list-group-item">
+                                                    P{{ p.name }} = {{ p.tTime }}
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Sum = {{ priority.sjf.accumTurnaroundTime }} ms
+                                                </li>
+                                                <li class="list-group-item average">
+                                                    Average = {{ priority.sjf.aveTurnaroundTime }} ms
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/index.js"></script>
+        <script>
+            var payload = <% - JSON.stringify(payload) %>;
+            if (Object.keys(payload).length) {
+                app.data = payload.data;
+                app.fcfs = payload.fcfs;
+                app.sjf = payload.sjf;
+                app.priority = payload.priority;
+            }
+        </script>
+    </body>
+
+    </html>
