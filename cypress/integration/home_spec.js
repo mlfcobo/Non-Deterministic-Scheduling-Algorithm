@@ -1,10 +1,3 @@
-// describe('My First Test', function () {
-//     it('Visits the Kitchen Sink', function () {
-//         cy.visit('http://localhost:5000/');
-//         cy.get('#file-upload').submit();
-//     })
-// })
-
 const attachFiles = require("cypress-form-data-with-file-upload");
 beforeEach(() => {
     cy.visit("http://localhost:5000/");
@@ -29,7 +22,7 @@ it("uploads", () => {
     cy.get("form").then(attachFiles(files));
 
     // submit the form
-    cy.get('button[type="submit"]').click();
+    cy.get('button[type="submit"]').click({ force: true });
 
     // FCFS
     cy.get('li[id="fcfs-wtsum"]').should(($li) => {
@@ -50,55 +43,55 @@ it("uploads", () => {
 
     //SJF
 
-    cy.get('li[id="sjf-wtsum"]').should(($li) => {
-        expect($li.get(0).innerText).to.eq("Sum = 16 ms");
-    });
+    cy.get("#sjf-wtsum")
+        .eq(0)
+        .should("contain", "Sum = 16 ms"); // true
 
-    cy.get('li[id="sjf-wtaverage"]').should(($li) => {
-        expect($li.get(0).innerText).to.eq("Average = 3.2 ms");
-    });
+    cy.get("#sjf-wtaverage")
+        .eq(0)
+        .should("contain", "Average = 3.2 ms"); // true
 
-    cy.get('li[id="sjf-ttsum"]').should(($li) => {
-        expect($li.get(0).innerText).to.eq("Sum = 35 ms");
-    });
+    cy.get("#sjf-ttsum")
+        .eq(0)
+        .should("contain", "Sum = 35 ms"); // true
 
-    cy.get('li[id="sjf-ttaverage"]').should(($li) => {
-        expect($li.get(0).innerText).to.eq("Average = 7 ms");
-    });
+    cy.get("#sjf-ttaverage")
+        .eq(0)
+        .should("contain", "Average = 7 ms"); // true
 
     //FCFSPRIO
 
-    cy.get('li[id="fcfsprio-wtsum"]').should(($li) => {
-        expect($li.get(0).innerText).to.eq("Sum = 41 ms");
-    });
+    cy.get("#fcfsprio-wtsum")
+        .eq(0)
+        .should("contain", "Sum = 41 ms");
 
-    cy.get('li[id="fcfsprio-wtaverage"]').should(($li) => {
-        expect($li.get(0).innerText).to.eq("Average = 8.2 ms");
-    });
+    cy.get("#fcfsprio-wtaverage")
+        .eq(0)
+        .should("contain", "Average = 8.2 ms");
 
-    cy.get('li[id="fcfsprio-ttsum"]').should(($li) => {
-        expect($li.get(0).innerText).to.eq("Sum = 60 ms");
-    });
+    cy.get("#fcfsprio-ttsum")
+        .eq(0)
+        .should("contain", "Sum = 60 ms");
 
-    cy.get('li[id="fcfsprio-ttaverage"]').should(($li) => {
-        expect($li.get(0).innerText).to.eq("Average = 12 ms");
-    });
+    cy.get("#fcfsprio-ttaverage")
+        .eq(0)
+        .should("contain", "Average = 12 ms");
 
     //SJFPRIO
 
-    cy.get('li[id="sjfprio-wtsum"]').should(($li) => {
-        expect($li.get(0).innerText).to.eq("Sum = 33 ms");
-    });
+    cy.get("#sjfprio-wtsum")
+        .eq(0)
+        .should("contain", "Sum = 33 ms");
 
-    cy.get('li[id="sjfprio-wtaverage"]').should(($li) => {
-        expect($li.get(0).innerText).to.eq("Average = 6.6 ms");
-    });
+    cy.get("#sjfprio-wtaverage")
+        .eq(0)
+        .should("contain", "Average = 6.6 ms");
 
-    cy.get('li[id="sjfprio-ttsum"]').should(($li) => {
-        expect($li.get(0).innerText).to.eq("Sum = 52 ms");
-    });
+    cy.get("#sjfprio-ttsum")
+        .eq(0)
+        .should("contain", "Sum = 52 ms");
 
-    cy.get('li[id="sjfprio-ttaverage"]').should(($li) => {
-        expect($li.get(0).innerText).to.eq("Average = 10.4 ms");
-    });
+    cy.get("#sjfprio-ttaverage")
+        .eq(0)
+        .should("contain", "Average = 10.4 ms");
 });
