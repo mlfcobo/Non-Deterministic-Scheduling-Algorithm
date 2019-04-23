@@ -32,7 +32,6 @@ router.post("/", upload.single("input"), function(req, res) {
     const filename = req.file && req.file.originalname;
     const data = fileParser.readFile(filename, false);
     const payload = scheduler.run(data);
-    console.log(payload);
     res.status(200).render("index", { payload });
 });
 
