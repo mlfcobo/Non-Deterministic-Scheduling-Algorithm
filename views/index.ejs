@@ -68,7 +68,9 @@
 						<div id="tab1" class="tab-pane fade in active">
 							<p class="title">FCFS | Gantt Chart</p>
 							<div class="btn-group gantt-chart">
-								<button class="btn btn-primary" v-for="p in fcfs.data" data-toggle="tooltip" data-placement="top" :title="`Waiting Time: ${p.wTime} | Turnaround Time: ${p.tTime}`">
+								<button class="btn btn-primary" v-for="p in fcfs.data" data-toggle="tooltip"
+									data-placement="top"
+									:title="`Waiting Time: ${p.wTime} | Turnaround Time: ${p.tTime}`">
 									P{{ p.name }} ({{ p.wTime }},{{ p.tTime }})
 								</button>
 							</div>
@@ -113,7 +115,9 @@
 						<div id="tab2" class="tab-pane fade">
 							<p class="title">SJF | Gantt Chart</p>
 							<div class="btn-group gantt-chart">
-								<button class="btn btn-primary" v-for="p in sjf.data" data-toggle="tooltip" data-placement="top" :title="`Waiting Time: ${p.wTime} | Turnaround Time: ${p.tTime}`">
+								<button class="btn btn-primary" v-for="p in sjf.data" data-toggle="tooltip"
+									data-placement="top"
+									:title="`Waiting Time: ${p.wTime} | Turnaround Time: ${p.tTime}`">
 									P{{ p.name }} ({{ p.wTime }},{{ p.tTime }})
 								</button>
 							</div>
@@ -158,8 +162,9 @@
 						<div id="tab5" class="tab-pane fade">
 							<p class="title">FCFS Priority | Gantt Chart</p>
 							<div class="btn-group gantt-chart">
-								<button class="btn btn-primary" v-for="p in priority.fcfs.data" data-toggle="tooltip" data-placement="top"
-								 :title="`Waiting Time: ${p.wTime} | Turnaround Time: ${p.tTime}`">
+								<button class="btn btn-primary" v-for="p in priority.fcfs.data" data-toggle="tooltip"
+									data-placement="top"
+									:title="`Waiting Time: ${p.wTime} | Turnaround Time: ${p.tTime}`">
 									P{{ p.name }} ({{ p.wTime }},{{ p.tTime }})
 								</button>
 							</div>
@@ -204,8 +209,9 @@
 						<div id="tab6" class="tab-pane fade">
 							<p class="title">SJF Priority | Gantt Chart</p>
 							<div class="btn-group gantt-chart">
-								<button class="btn btn-primary" v-for="p in priority.sjf.data" data-toggle="tooltip" data-placement="top"
-								 :title="`Waiting Time: ${p.wTime} | Turnaround Time: ${p.tTime}`">
+								<button class="btn btn-primary" v-for="p in priority.sjf.data" data-toggle="tooltip"
+									data-placement="top"
+									:title="`Waiting Time: ${p.wTime} | Turnaround Time: ${p.tTime}`">
 									P{{ p.name }} ({{ p.wTime }},{{ p.tTime }})
 								</button>
 							</div>
