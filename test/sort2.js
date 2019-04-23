@@ -1,6 +1,7 @@
 const expect = require("chai").expect;
 const fileParser = require("../helpers/file-parser");
 const util = require("../helpers/utility");
+const sortObjects = require("sort-objects-array");
 
 describe("Sorting Algorithms in process2.txt", function() {
     const data = fileParser.readFile("process2.txt", false);
@@ -57,7 +58,8 @@ describe("Sorting Algorithms in process2.txt", function() {
     });
 
     it("Sorted by burst time | data should be in the order 15 2 14 13 5 11 6 12 10 1 16 9 8 3 17 18 19 20 4 7", function() {
-        let arr = [...data].sort(util.sortByBurstTime);
+        // let arr = [...data].sort(util.sortByBurstTime);
+        let arr = sortObjects(data, "burstTime");
         expect(util.reformatByName(arr)).to.eql([
             15,
             2,
