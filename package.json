@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "nyc mocha --timeout=3000"
+    "start": "node app.js",
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
