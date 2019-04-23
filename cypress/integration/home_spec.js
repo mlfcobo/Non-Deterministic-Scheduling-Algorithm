@@ -18,6 +18,7 @@ it("uploads", () => {
             }
         )
     };
+
     // get the form element and attach files to upload
     cy.get("form").then(attachFiles(files));
 
