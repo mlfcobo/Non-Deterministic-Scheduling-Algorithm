@@ -23,7 +23,7 @@ const sortByPriority = (arr) => {
 };
 
 const sortByBurstTime = (a, b) => {
-    return a.burstTime - b.burstTime;
+    return Number(a.burstTime) - Number(b.burstTime);
 };
 
 const sortByArrivalTime = (a, b) => {
