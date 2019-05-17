@@ -11,3 +11,13 @@ script:
     # after all tests finish running we need
     # to kill all background jobs (like "npm start &")
     - kill $(jobs -p) || true
+
+notifications:
+    webhooks:
+        urls:
+            - https://webhook.atomist.com/atomist/travis/teams/AKQMMNPJR
+        on_success: always
+        on_failure: always
+        on_start: always
+        on_cancel: always
+        on_error: always
